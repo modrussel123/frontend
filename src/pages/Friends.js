@@ -25,7 +25,7 @@ const FriendCard = ({ friend, onRemove }) => {
             <div className="friend-profile">
                 {friend.profilePicture ? (
                     <img 
-                        src={`${process.env.REACT_APP_BACKEND_URL}${friend.profilePicture}`}
+                        src={`${process.env.REACT_APP_BACKEND_URL}/${friend.profilePicture}`}
                         alt={`${friend.firstName}'s profile`}
                         className="friend-profile-picture"
                     />
@@ -250,7 +250,10 @@ const Friends = () => {
 
         try {
             const { data } = await axios.get(
-                `${process.env.REACT_APP_BACKEND_URL}`
+                `${process.env.REACT_APP_BACKEND_URL}/api/friends/search?email=${searchEmail}`,
+                config
+            );
+
             // Check if the searched email is the user's own email
             if (searchEmail === userEmail) {
                 setSearchResult({
@@ -483,7 +486,7 @@ const Friends = () => {
             if (result.isConfirmed) {
                 const token = localStorage.getItem('token');
                 await axios.post(
-                    `${process.env.REACT_APP_BACKEND_URL}/api/friends/remove` ,
+                    `${process.env.REACT_APP_BACKEND_URL}/api/friends/remove`,
                     { friendEmail },
                     {
                         headers: {
