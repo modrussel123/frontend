@@ -250,7 +250,7 @@ const Friends = () => {
 
         try {
             const { data } = await axios.get(
-                `${process.env.REACT_APP_BACKEND_URL}
+                `${process.env.REACT_APP_BACKEND_URL}`
             // Check if the searched email is the user's own email
             if (searchEmail === userEmail) {
                 setSearchResult({
@@ -483,7 +483,7 @@ const Friends = () => {
             if (result.isConfirmed) {
                 const token = localStorage.getItem('token');
                 await axios.post(
-                    `${process.env.REACT_APP_BACKEND_URL}/api/friends/remove ` ,
+                    `${process.env.REACT_APP_BACKEND_URL}/api/friends/remove` ,
                     { friendEmail },
                     {
                         headers: {
