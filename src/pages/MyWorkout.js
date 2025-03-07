@@ -9,7 +9,8 @@ import "../styles/MyWorkout.css";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-axios.defaults.baseURL = $process.env.REACT_APP_BACKEND_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 const Toast = ({ message, type, onClose }) => {
@@ -78,7 +79,7 @@ const MyWorkout = () => {
                 return;
             }
 
-            const response = await axios.get('/api/workouts', {
+            const response = await axios.get(`${API_URL}api/workouts`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -299,7 +300,7 @@ const handleSaveWorkout = async () => {
         const currentTime = Date.now() / 1000;
         if (decodedToken.exp < currentTime) {
             // Token is expired, refresh it
-            const refreshResponse = await axios.post('/api/refresh-token', { token });
+            const refreshResponse = await axios.post(`${API_URL}api/refresh-token`, { token });
             token = refreshResponse.data.token;
             localStorage.setItem('token', token);
         }
@@ -319,8 +320,8 @@ const handleSaveWorkout = async () => {
         console.log('Sending workout data:', JSON.stringify(workoutData, null, 2));
 
         const endpoint = editingWorkout 
-            ? `/api/workouts/${editingWorkout._id}`
-            : "/api/workouts";
+            ? `${API_URL}api/workouts/${editingWorkout._id}`
+            : `${API_URL}api/workouts`;
 
         const response = await axios({
             method: editingWorkout ? 'put' : 'post',
@@ -386,7 +387,7 @@ const confirmDelete = async (id) => {
             return;
         }
 
-        const response = await axios.delete(`/api/workouts/${id}`, {
+        const response = await axios.delete(`${API_URL}api/workouts/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -602,7 +603,7 @@ const confirmDelete = async (id) => {
         const checkAuth = async () => {
             try {
                 // Make a test request to verify token
-                await axios.get($process.env.REACT_APP_BACKEND_URL, {
+                await axios.get(`${API_URL}api/workouts`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } catch (error) {

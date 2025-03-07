@@ -1,11 +1,11 @@
 .leaderboard-container {
-    max-width: 900px;
+    width: 100%;
+    max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
     background: rgba(27, 67, 50, 0.8);
     border-radius: 20px;
     border: 1px solid #00A951;
-    animation: borderGlow 4s infinite alternate;
 }
 
 .leaderboard-message {
@@ -23,7 +23,10 @@
     width: 100%;
     min-height: 100vh;
     background: linear-gradient(to bottom, #1B4332, #081C15 85%);
-    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
 }
 
 .leaderboard-header {
@@ -51,12 +54,16 @@
 .top-performers {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     gap: 2rem;
-    padding: 2rem 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem 0;
 }
 
 .performer {
+    width: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -146,6 +153,114 @@
     }
     to {
         box-shadow: 0 0 20px rgba(0, 255, 132, 0.4);
+    }
+}
+
+/* Add these mobile styles at the bottom of Leaderboard.css */
+
+/* Update mobile styles */
+@media screen and (max-width: 768px) {
+    .leaderboard-page {
+        padding: 2rem 0;  /* Remove horizontal padding from page */
+        display: flex;
+        justify-content: center;
+    }
+
+    .leaderboard-container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 1.5rem 1rem;  /* Adjusted inner padding */
+        box-sizing: border-box;
+    }
+
+    .leaderboard-header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .trophy-icon {
+        font-size: 1.8rem;
+    }
+
+    .leaderboard-header h2 {
+        font-size: 1.8rem;
+        white-space: nowrap;
+    }
+
+    .top-performers {
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .performer {
+        width: 200px;
+        margin-bottom: 1rem;
+    }
+
+    .performer.first,
+    .performer.second,
+    .performer.third {
+        height: auto;
+        min-height: 120px;
+    }
+
+    .crown {
+        font-size: 1.8rem;
+    }
+
+    .medal {
+        font-size: 1.5rem;
+    }
+
+    .name {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .leaderboard-page {
+        padding: 1.5rem 0;
+    }
+
+    .leaderboard-container {
+        width: 92%;
+        padding: 1rem;
+    }
+
+    .leaderboard-header {
+        gap: 0.5rem;
+    }
+
+    .trophy-icon {
+        font-size: 1.5rem;
+    }
+
+    .leaderboard-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .top-performers {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .performer {
+        width: 180px;
+        max-width: 200px;
+        margin-bottom: 1rem;
+    }
+
+    .performer.first,
+    .performer.second,
+    .performer.third {
+        height: auto;
+        min-height: 150px;
+        padding: 1rem;  
     }
 }
 

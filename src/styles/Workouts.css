@@ -1,50 +1,90 @@
+/* Overall page layout similar to Leaderboard */
 .workouts-page {
     width: 100%;
     min-height: 100vh;
     background: linear-gradient(to bottom, #1B4332, #081C15 85%);
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
 }
 
+/* Overall page layout similar to Leaderboard */
+.programs-page {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1B4332, #081C15 85%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+/* Container styling */
 .workouts-container {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.workouts-header {
-    text-align: center;
-    margin-bottom: 3rem;
+    max-width: 800px;
+    background: rgba(27, 67, 50, 0.8);
     padding: 2rem;
     border-radius: 20px;
     border: 1px solid #00A951;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/* Header container styling */
+.programs-header-container {
+    width: 100%;
+    max-width: 800px;
     background: rgba(27, 67, 50, 0.8);
-    animation: borderGlow 4s infinite alternate;
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid #00A951;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.programs-header-container h2 {
+    color: #00ff84;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+}
+
+/* Header styling */
+.workouts-header {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .workouts-header h2 {
-    font-size: 2.5rem;
     color: #00ff84;
+    font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 3px;
-    text-shadow: 0 0 10px rgba(0, 255, 132, 0.5);
+    margin: 0;
 }
 
+/* Grid layout for cards */
 .workouts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
 }
 
+/* Card styling similar to performers */
 .workout-card {
-    padding: 2rem;
-    border-radius: 20px;
+    background: rgba(27, 67, 50, 0.6);
     border: 1px solid #00A951;
-    background: rgba(27, 67, 50, 0.8);
+    border-radius: 15px;
+    padding: 1rem;
     text-align: center;
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .workout-card:hover {
@@ -52,32 +92,71 @@
 }
 
 .workout-icon {
-    font-size: 3rem;
-    color: #00ff84;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: #FFD700;
+    margin-bottom: 0.5rem;
 }
 
 .workout-card h3 {
-    color: #00ff84;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.workout-card p {
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    margin: 0;
 }
 
-@keyframes borderGlow {
-    from {
-        box-shadow: 0 0 10px rgba(0, 255, 132, 0.2);
-    }
-    to {
-        box-shadow: 0 0 20px rgba(0, 255, 132, 0.4);
+/* Each program container styling */
+.program-container {
+    width: 100%;
+    max-width: 800px;
+    background: rgba(27, 67, 50, 0.8);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid #00A951;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.program-container:hover {
+    transform: translateY(-5px);
+}
+
+.program-icon {
+    font-size: 2.5rem;
+    color: #FFD700;
+    margin-bottom: 0.5rem;
+}
+
+.program-container h3 {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Mobile responsiveness */
+/* On medium screens, switch to 2 columns */
+@media screen and (max-width: 768px) {
+    .workouts-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-
-
+/* On small screens, use a single column for ease-of-use */
+@media screen and (max-width: 480px) {
+    .workouts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .programs-header-container h2 {
+        font-size: 2rem;
+    }
+    
+    .program-icon {
+        font-size: 2rem;
+    }
+    
+    .program-container h3 {
+        font-size: 1rem;
+    }
+}

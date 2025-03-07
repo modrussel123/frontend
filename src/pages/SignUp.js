@@ -4,6 +4,8 @@ import { FaBicycle, FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash, FaArrowRight,
 import Swal from 'sweetalert2';
 import '../styles/Signup.css';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 function SignUp() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -48,7 +50,7 @@ function SignUp() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`, {
+        const response = await fetch(`${API_URL}api/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 

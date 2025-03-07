@@ -5,6 +5,8 @@ import { FaUser, FaCamera, FaTrash, FaTimes } from 'react-icons/fa';
 import Swal from 'sweetalert2'; 
 import '../styles/Profile.css';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -48,7 +50,7 @@ const Profile = () => {
                 return;
             }
 
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/profile`, {
+            const response = await axios.get(`${API_URL}api/profile`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -196,7 +198,7 @@ const Profile = () => {
                 const formData = new FormData();
                 formData.append("profilePicture", selectedFile);
 
-                const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/profile/upload-profile`, 
+                const response = await axios.post(`${API_URL}api/profile/upload-profile`, 
                     formData,
                     {
                         headers: { 
@@ -267,7 +269,7 @@ const Profile = () => {
 
             if (result.isConfirmed) {
                 const token = localStorage.getItem("token");
-                await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/profile/delete-profile`, {
+                await axios.delete(`${API_URL}api/profile/delete-profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 
@@ -316,7 +318,7 @@ const Profile = () => {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.put(
-               `${process.env.REACT_APP_BACKEND_URL}/api/profile/update-info`,
+                `${API_URL}api/profile/update-info`,
                 {
                     ...editedInfo,
                     height: parseFloat(editedInfo.height),
@@ -383,7 +385,7 @@ const Profile = () => {
             if (result.isConfirmed) {
                 const token = localStorage.getItem('token');
                 await axios.put(
-                    `${process.env.REACT_APP_BACKEND_URL}/api/profile/toggle-privacy`,
+                    `${API_URL}api/profile/toggle-privacy`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` }}
                 );
@@ -468,14 +470,13 @@ const Profile = () => {
             />
         ) : user.profilePicture ? (
             <img 
-                src={`${process.env.REACT_APP_BACKEND_URL}
-                /${user.profilePicture}`} 
+                src={`${API_URL}${user.profilePicture}`} 
                 alt="Profile" 
                 style={{ 
                     width: '250px', 
                     height: '250px', 
                     objectFit: 'cover',
-                    borderRadius: '50%'  // If you want to keep the circular shape
+                    borderRadius: '50%'  
                 }}
             />
         ) : (

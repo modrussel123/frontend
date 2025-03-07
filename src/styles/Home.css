@@ -4,34 +4,51 @@
     background: linear-gradient(to bottom, #1B4332, #081C15 85%);
     color: #ffffff;
     font-family: 'Inter', sans-serif;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
 }
 
 .home-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .page-header {
-    width: 100%;
     text-align: center;
+    margin-bottom: 3rem;
     padding: 2rem;
     border-radius: 20px;
     border: 1px solid #00A951;
     background: rgba(27, 67, 50, 0.8);
     animation: borderGlow 4s infinite alternate;
-    margin-bottom: 2rem;
+}
+
+.header-icon {
+    font-size: 2.5rem;
+    color: #00ff84;
+}
+
+.mirror {
+    transform: scaleX(-1);
+}
+
+.page-header h2 {
+    display: inline-block;
+    font-size: 2.5rem;
+    color: #00ff84;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(0, 255, 132, 0.5);
 }
 
 .welcome-text {
     text-align: center;
-    font-size: 1.5rem;
-    color: #ffffff;
+    color: #00ff84;
+    font-size: 2rem;
+    margin-top: -20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 255, 132, 0.3);
 }
 
 @keyframes borderGlow {
@@ -43,3 +60,60 @@
     }
 }
 
+/* Mobile View */
+@media screen and (max-width: 768px) {
+    .home-container {
+        width: 90%;           /* More responsive width */
+        padding: 1rem;
+        margin: 0 auto;       /* Center the container */
+    }
+
+    .page-header {
+        padding: 1rem;        /* Reduced padding for mobile */
+        margin-bottom: 2rem;  /* Reduced margin */
+        background: rgba(27, 67, 50, 0.8);
+        border: 1px solid #00A951;
+    }
+
+    .header-icon {
+        font-size: 1.8rem;    /* Slightly smaller icons */
+        margin: 0 0.5rem;     /* Reduced margin between icons */
+        color: #00ff84;
+    }
+
+    .page-header h2 {
+        font-size: 1.8rem;    /* More readable size for mobile */
+        padding: 0.5rem 0;    /* Added vertical padding */
+        color: #00ff84;
+        text-shadow: 0 0 10px rgba(0, 255, 132, 0.5);
+    }
+
+    .welcome-text {
+        font-size: 1.3rem;    /* Better size for mobile */
+        margin-top: -10px;    /* Reduced negative margin */
+        padding: 0.5rem;      /* Added padding */
+        color: #00ff84;
+        text-shadow: 0 0 10px rgba(0, 255, 132, 0.3);
+    }
+}
+
+/* Add smaller screen optimization */
+@media screen and (max-width: 480px) {
+    .home-container {
+        width: 95%;           /* Even wider for very small screens */
+        padding: 0.5rem;
+    }
+
+    .page-header h2 {
+        font-size: 1.5rem;    /* Smaller text for very small screens */
+    }
+
+    .header-icon {
+        font-size: 1.5rem;    /* Smaller icons */
+    }
+
+    .welcome-text {
+        font-size: 1.2rem;    /* Smaller welcome text */
+        margin-top: -8px;     /* Adjusted spacing */
+    }
+}

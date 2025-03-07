@@ -3,6 +3,8 @@ import axios from 'axios';
 import { FaTrophy, FaDumbbell, FaFire } from 'react-icons/fa';
 import "../styles/Achievements.css";
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Achievements = () => {
     const [streak, setStreak] = useState(0);
     const [workouts, setWorkouts] = useState([]);
@@ -22,7 +24,7 @@ const Achievements = () => {
 
             try {
                 setLoading(true);
-                const res = await axios.get(`http://localhost:5000/api/streaks?email=${email}`);
+                const res = await axios.get(`${API_URL}api/streaks?email=${email}`);
                 setStreak(res.data.streakCount);
                 setWorkouts(res.data.addedWorkouts);
             } catch (error) {

@@ -25,6 +25,8 @@ ChartJS.register(
     Legend
 );
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 // Add Toast component at the top
 const Toast = ({ message, type, onClose }) => {
     useEffect(() => {
@@ -104,7 +106,7 @@ const WeightTracking = () => {
                 return;
             }
 
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/profile`, {
+            const response = await axios.get(`${API_URL}api/profile`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCurrentWeight(response.data.weight);
@@ -134,7 +136,7 @@ const WeightTracking = () => {
     const fetchWeightHistory = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/weight/history`, {
+            const response = await axios.get(`${API_URL}api/weight/history`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setWeightHistory(response.data);
@@ -168,7 +170,7 @@ const WeightTracking = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/weight/log`, 
+            await axios.post(`${API_URL}api/weight/log`, 
                 { weight: newWeight },
                 { headers: { Authorization: `Bearer ${token}` }}
             );
@@ -197,7 +199,7 @@ const WeightTracking = () => {
     const confirmDelete = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/weight/${showConfirmModal.id}`, {
+            await axios.delete(`${API_URL}api/weight/${showConfirmModal.id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             showToast('Weight record deleted successfully', 'success');

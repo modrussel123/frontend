@@ -5,6 +5,8 @@ import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Friends.css";
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 const NoProfilePicture = ({ name }) => (
     <div className="no-profile-picture">
         <FaUser 
@@ -25,7 +27,7 @@ const FriendCard = ({ friend, onRemove }) => {
             <div className="friend-profile">
                 {friend.profilePicture ? (
                     <img 
-                        src={`${process.env.REACT_APP_BACKEND_URL}/${friend.profilePicture}`}
+                        src={`${API_URL}${friend.profilePicture}`}
                         alt={`${friend.firstName}'s profile`}
                         className="friend-profile-picture"
                     />
@@ -121,7 +123,7 @@ const Friends = () => {
         // Add token expiration check
         const checkTokenExpiration = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/friends/list`, {
+                const response = await axios.get(`${API_URL}api/friends/list`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } catch (error) {
@@ -157,7 +159,7 @@ const Friends = () => {
     useEffect(() => {
         const getUserEmail = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/profile`, config);
+                const response = await axios.get(`${API_URL}api/profile`, config);
                 setUserEmail(response.data.email);
             } catch (error) {
                 console.error('Error fetching user email:', error);
@@ -168,7 +170,7 @@ const Friends = () => {
 
     const fetchFriendRequests = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/friends/requests`, config);
+            const { data } = await axios.get(`${API_URL}api/friends/requests`, config);
             setFriendRequests(data);
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -182,7 +184,7 @@ const Friends = () => {
 
     const fetchSentRequests = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/friends/sent-requests`, config);
+            const { data } = await axios.get(`${API_URL}api/friends/sent-requests`, config);
             setSentRequests(data);
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -218,7 +220,7 @@ const Friends = () => {
                 return;
             }
 
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/friends/list`, config);
+            const response = await axios.get(`${API_URL}api/friends/list`, config);
             setFriends(response.data);
         } catch (error) {
             if (error.response && error.response.status === 401) {
@@ -250,7 +252,7 @@ const Friends = () => {
 
         try {
             const { data } = await axios.get(
-                `${process.env.REACT_APP_BACKEND_URL}/api/friends/search?email=${searchEmail}`,
+                `${API_URL}api/friends/search?email=${searchEmail}`,
                 config
             );
 
@@ -318,7 +320,7 @@ const Friends = () => {
 
             if (result.isConfirmed) {
                 const { data } = await axios.post(
-                    `${process.env.REACT_APP_BACKEND_URL}/api/friends/request`,
+                    `${API_URL}api/friends/request`,
                     { receiverEmail: searchResult.email },
                     config
                 );
@@ -372,7 +374,7 @@ const Friends = () => {
             if (result.isConfirmed) {
                 try {
                     await axios.post(
-                        `${process.env.REACT_APP_BACKEND_URL}/api/friends/${action}`,
+                        `${API_URL}api/friends/${action}`,
                         { requestId },
                         config
                     );
@@ -428,7 +430,7 @@ const Friends = () => {
             if (result.isConfirmed) {
                 try {
                     await axios.post(
-                        `${process.env.REACT_APP_BACKEND_URL}/api/friends/cancel-request`,
+                        `${API_URL}api/friends/cancel-request`,
                         { receiverEmail },
                         config
                     );
@@ -486,7 +488,7 @@ const Friends = () => {
             if (result.isConfirmed) {
                 const token = localStorage.getItem('token');
                 await axios.post(
-                    `${process.env.REACT_APP_BACKEND_URL}/api/friends/remove`,
+                    `${API_URL}api/friends/remove`,
                     { friendEmail },
                     {
                         headers: {
@@ -529,7 +531,7 @@ const Friends = () => {
     useEffect(() => {
         const fetchFriends = async () => {
             try {
-                const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/friends/list`, config);
+                const { data } = await axios.get(`${API_URL}api/friends/list`, config);
                 setFriends(data);
             } catch (error) {
                 console.error('Failed to fetch friends:', error);
@@ -565,7 +567,7 @@ const Friends = () => {
                             <div className="user-card">
                                 {searchResult.profilePicture ? (
                                     <img
-                                        src={`${process.env.REACT_APP_BACKEND_URL}/${searchResult.profilePicture}`}
+                                        src={`${API_URL}${searchResult.profilePicture}`}
                                         alt="Profile"
                                         className="profile-picture"
                                     />
@@ -649,7 +651,7 @@ const Friends = () => {
                                     <div key={request._id} className="request-card">
                                         {request.sender?.profilePicture ? (
                                             <img
-                                                src={`${process.env.REACT_APP_BACKEND_URL}/${request.sender.profilePicture}`}
+                                                src={`${API_URL}${request.sender.profilePicture}`}
                                                 alt="Profile"
                                                 className="profile-picture"
                                             />
@@ -690,7 +692,7 @@ const Friends = () => {
                                     <div key={request._id} className="request-card">
                                         {request.receiver?.profilePicture ? (
                                             <img
-                                                src={`${process.env.REACT_APP_BACKEND_URL}/${request.receiver.profilePicture}`}
+                                                src={`${API_URL}${request.receiver.profilePicture}`}
                                                 alt="Profile"
                                                 className="profile-picture"
                                             />

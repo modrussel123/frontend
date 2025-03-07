@@ -4,6 +4,8 @@ import axios from 'axios';
 import '../styles/SettingsDropdown.css';
 import { handleGlobalSignOut, confirmSignOut } from '../utils/auth';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 function SettingsDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -21,7 +23,7 @@ function SettingsDropdown() {
 
     try {
       // Make a test request to verify token
-      await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/profile`, {
+      await axios.get(`${API_URL}api/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setIsTokenValid(true);
