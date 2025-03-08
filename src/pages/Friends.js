@@ -27,7 +27,7 @@ const FriendCard = ({ friend, onRemove }) => {
             <div className="friend-profile">
                 {friend.profilePicture ? (
                     <img 
-                        src={`${API_URL}${friend.profilePicture}`}
+                        src={friend.profilePicture}  // Remove API_URL concatenation
                         alt={`${friend.firstName}'s profile`}
                         className="friend-profile-picture"
                     />

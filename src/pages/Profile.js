@@ -470,7 +470,7 @@ const Profile = () => {
             />
         ) : user.profilePicture ? (
             <img 
-                src={`${API_URL}${user.profilePicture}`} 
+                src={user.profilePicture}  // Remove API_URL concatenation
                 alt="Profile" 
                 style={{ 
                     width: '250px', 
