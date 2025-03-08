@@ -27,7 +27,7 @@ const FriendCard = ({ friend, onRemove }) => {
             <div className="friend-profile">
                 {friend.profilePicture ? (
                     <img 
-                        src={friend.profilePicture}  // Remove API_URL concatenation
+                        src={friend.profilePicture} 
                         alt={`${friend.firstName}'s profile`}
                         className="friend-profile-picture"
                     />
@@ -567,7 +567,7 @@ const Friends = () => {
                             <div className="user-card">
                                 {searchResult.profilePicture ? (
                                     <img
-                                        src={`${API_URL}${searchResult.profilePicture}`}
+                                        src={searchResult.profilePicture} 
                                         alt="Profile"
                                         className="profile-picture"
                                     />
@@ -651,7 +651,7 @@ const Friends = () => {
                                     <div key={request._id} className="request-card">
                                         {request.sender?.profilePicture ? (
                                             <img
-                                                src={`${API_URL}${request.sender.profilePicture}`}
+                                                src={request.sender.profilePicture} 
                                                 alt="Profile"
                                                 className="profile-picture"
                                             />
@@ -692,7 +692,7 @@ const Friends = () => {
                                     <div key={request._id} className="request-card">
                                         {request.receiver?.profilePicture ? (
                                             <img
-                                                src={`${API_URL}${request.receiver.profilePicture}`}
+                                                src={request.receiver.profilePicture} 
                                                 alt="Profile"
                                                 className="profile-picture"
                                             />
