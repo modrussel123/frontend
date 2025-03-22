@@ -254,11 +254,11 @@ function SignUp() {
             <FaRuler className="signup-input-icon" />
             <input 
               type="number"
-              placeholder="Height (Max: 250 cm)" 
+              placeholder="Height (140-250 cm)" 
               className="signup-input"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              min="100"
+              min="140"  // Changed from 100 to 140
               max="250"
               required 
             />
@@ -268,11 +268,11 @@ function SignUp() {
             <FaWeight className="signup-input-icon" />
             <input 
               type="number"
-              placeholder="Weight (Max: 500 kg)" 
+              placeholder="Weight (40-500 kg)" 
               className="signup-input"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              min="30"
+              min="40"   // Changed from 30 to 40
               max="500"
               required 
             />

@@ -121,20 +121,10 @@ function SettingsDropdown() {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    to="/weight-tracking" 
-                    onClick={handleLinkClick}
-                  >
-                   Track Weight
-                  </Link>
+                
                 </li>
                 <li>
-                  <Link 
-                    to="/my-workout" 
-                    onClick={handleLinkClick}
-                  >
-                    My Workouts
-                  </Link>
+                
                 </li>
                 <li>
                   <Link 

@@ -40,6 +40,25 @@ const ConfirmationModal = ({ message, onConfirm, onCancel }) => (
     </div>
 );
 
+// Add this component inside MyWorkout.js before the main component
+const CompletionModal = ({ workout, onConfirm, onCancel }) => (
+    <div className="modal-overlay" onClick={onCancel}>
+        <div className="completion-modal" onClick={e => e.stopPropagation()}>
+            <h3>Complete Workout</h3>
+            <p>Are you sure you want to mark <strong>{workout.exerciseName}</strong> as completed?</p>
+            <p>This action cannot be undone, and the workout will be locked for editing.</p>
+            <div className="completion-actions">
+                <button className="completion-cancel" onClick={onCancel}>
+                    Cancel
+                </button>
+                <button className="completion-confirm" onClick={onConfirm}>
+                    Mark as Complete
+                </button>
+            </div>
+        </div>
+    </div>
+);
+
 const MyWorkout = () => {
     const navigate = useNavigate();
     const [token] = useState(localStorage.getItem('token'));
@@ -69,6 +88,8 @@ const MyWorkout = () => {
     const [availableExercises, setAvailableExercises] = useState([]);
     const [toasts, setToasts] = useState([]);
     const [showConfirmModal, setShowConfirmModal] = useState({ show: false, workoutId: null, message: "" });
+    const [completedWorkouts, setCompletedWorkouts] = useState([]);
+    const [completionModal, setCompletionModal] = useState({ show: false, workout: null });
 
     // Update fetchWorkouts function
     const fetchWorkouts = async () => {
@@ -101,10 +122,24 @@ const MyWorkout = () => {
         }
     };
 
+    // Add function to fetch completed workouts
+    const fetchCompletedWorkouts = async () => {
+        try {
+            const response = await axios.get(`${API_URL}api/workouts/completed`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setCompletedWorkouts(response.data);
+        } catch (error) {
+            console.error('Error fetching completed workouts:', error);
+            showToast('Failed to fetch completed workouts', 'error');
+        }
+    };
+
     // Update the initial data fetch
     useEffect(() => {
         if (token) {
             fetchWorkouts();
+            fetchCompletedWorkouts();
         }
     }, [token]);
 
@@ -626,6 +661,105 @@ const confirmDelete = async (id) => {
         checkAuth();
     }, [navigate]);
 
+    // Update the handleCompleteWorkout function
+    const handleCompleteWorkout = async (workout) => {
+        if (isWorkoutCompleted(workout._id)) {
+            showToast("This workout is already completed!", "info");
+            return;
+        }
+        setCompletionModal({ show: true, workout });
+    };
+
+    // Add this function to handle the completion confirmation
+    const confirmCompletion = async (workout) => {
+        try {
+            const response = await axios.post(
+                `${API_URL}api/workouts/${workout._id}/complete`,
+                {},
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+
+            if (response.status === 200) {
+                setCompletedWorkouts([...completedWorkouts, response.data.completedWorkout]);
+                showToast("Workout completed successfully! 💪", "success");
+                fetchWorkouts(); // Refresh the workout list
+            }
+        } catch (error) {
+            console.error("Error completing workout:", error);
+            showToast("Failed to complete workout", "error");
+        } finally {
+            setCompletionModal({ show: false, workout: null });
+        }
+    };
+
+    const isWorkoutCompleted = (workoutId) => {
+        return completedWorkouts.some(cw => cw.workoutId === workoutId);
+    };
+
+    // Update the renderWorkoutCard function to have only one set of buttons
+const renderWorkoutCard = (workout) => {
+    const completed = isWorkoutCompleted(workout._id);
+    
+    return (
+        <div className={`workout-card ${completed ? 'completed' : ''}`} key={workout._id}>
+            {completed && (
+                <div className="completed-badge">
+                    <span className="complete-icon">✓</span>
+                    COMPLETED
+                </div>
+            )}
+            
+            <div className={`workout-content ${completed ? 'completed-text' : ''}`}>
+                <h3 className="workout-title">{workout.category}</h3>
+                <div className="card-category">{workout.exerciseName}</div>
+                <div className="workout-details">
+                    <div className="detail-box"><span>TARGET :</span> {workout.target}</div>
+                    <div className="detail-box"><span>REPS :</span> {workout.reps}</div>
+                </div>
+                <div className="workout-details">
+                    <div className="detail-box"><span>SET :</span> {workout.sets}</div>
+                    <div className="detail-box"><span>WEIGHT :</span> {workout.weight} lbs</div>
+                </div>
+                {workout.description && ( 
+                    <div className="description-box">
+                        <span>DESCRIPTION :</span> 
+                        {workout.description}
+                    </div>
+                )}
+                
+                {/* Single set of action buttons */}
+                <div className="workout-actions">
+                    {!completed && (
+                        <>
+                            <button 
+                                className="button-edit"
+                                onClick={() => handleEditClick(workout)}
+                            >
+                                EDIT
+                            </button>
+                            <button 
+                                className="button-complete" 
+                                onClick={() => handleCompleteWorkout(workout)}
+                                disabled={completed}
+                            >
+                                {window.innerWidth <= 768 ? 'COMPLETE' : 'COMPLETE WORKOUT'}
+                            </button>
+                        </>
+                    )}
+                    <button 
+                        className="button-delete"
+                        onClick={() => handleDeleteWorkout(workout._id)}
+                    >
+                        DELETE
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
     return (
         <div className="page-container">
             <div className="page-content">
@@ -653,30 +787,7 @@ const confirmDelete = async (id) => {
                 </div>
 
                 <div className="cards-container">
-                    {workouts.map(workout => (
-                        <div key={workout._id} className="workout-card">
-                            <h3 className="workout-title">{workout.category}</h3>
-                            <div className="card-category">{workout.exerciseName}</div>
-                            <div className="workout-details">
-                                <div className="detail-box"><span>TARGET :</span> {workout.target}</div>
-                                <div className="detail-box"><span>REPS :</span> {workout.reps}</div>
-                            </div>
-                            <div className="workout-details">
-                                <div className="detail-box"><span>SET :</span> {workout.sets}</div>
-                                <div className="detail-box"><span>WEIGHT :</span> {workout.weight} lbs</div>
-                            </div>
-                            {workout.description && ( 
-                                <div className="description-box">
-                                    <span>DESCRIPTION :</span> 
-                                    {workout.description}
-                                </div>
-                            )}
-                            <div className="buttons">
-                                <button className="button-edit" onClick={() => handleEditClick(workout)}>EDIT</button>
-                                <button className="button-delete" onClick={() => handleDeleteWorkout(workout._id)}>DELETE</button>
-                            </div>
-                        </div>
-                    ))}
+                    {workouts.map(workout => renderWorkoutCard(workout))}
                 </div>
             </div>
 
@@ -830,6 +941,13 @@ const confirmDelete = async (id) => {
                     message={showConfirmModal.message}
                     onConfirm={() => confirmDelete(showConfirmModal.workoutId)}
                     onCancel={() => setShowConfirmModal({ show: false, workoutId: null, message: "" })}
+                />
+            )}
+            {completionModal.show && (
+                <CompletionModal
+                    workout={completionModal.workout}
+                    onConfirm={() => confirmCompletion(completionModal.workout)}
+                    onCancel={() => setCompletionModal({ show: false, workout: null })}
                 />
             )}
         </div>

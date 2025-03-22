@@ -1,4 +1,3 @@
-/* Overall page layout similar to Leaderboard */
 .workouts-page {
     width: 100%;
     min-height: 100vh;
@@ -10,7 +9,7 @@
     box-sizing: border-box;
 }
 
-/* Overall page layout similar to Leaderboard */
+
 .programs-page {
     width: 100%;
     min-height: 100vh;
@@ -22,7 +21,7 @@
     box-sizing: border-box;
 }
 
-/* Container styling */
+
 .workouts-container {
     width: 100%;
     max-width: 800px;
@@ -34,7 +33,7 @@
     margin: 0 auto;
 }
 
-/* Header container styling */
+
 .programs-header-container {
     width: 100%;
     max-width: 800px;
@@ -48,14 +47,15 @@
 }
 
 .programs-header-container h2 {
-    color: #00ff84;
+    color: #ffffff;
     font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 3px;
-    margin: 0;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* Header styling */
+
 .workouts-header {
     text-align: center;
     margin-bottom: 2rem;
@@ -69,14 +69,14 @@
     margin: 0;
 }
 
-/* Grid layout for cards */
+
 .workouts-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
 
-/* Card styling similar to performers */
+
 .workout-card {
     background: rgba(27, 67, 50, 0.6);
     border: 1px solid #00A951;
@@ -103,7 +103,7 @@
     margin: 0;
 }
 
-/* Each program container styling */
+
 .program-container {
     width: 100%;
     max-width: 800px;
@@ -119,13 +119,17 @@
 }
 
 .program-container:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(0, 255, 132, 0.3);
+    background: rgba(0, 169, 81, 0.2);
+    border-color: #00ff84;
 }
 
 .program-icon {
-    font-size: 2.5rem;
-    color: #FFD700;
-    margin-bottom: 0.5rem;
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+    color: #222222;  /* Light black shade */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .program-container h3 {
@@ -134,29 +138,176 @@
     margin: 0;
 }
 
-/* Mobile responsiveness */
-/* On medium screens, switch to 2 columns */
+
+.programs-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(27, 67, 50, 0.9);
+    border: 2px solid #00A951;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+}
+
+/* Update icon colors to darker shade */
+.nav-button .nav-icon {
+    font-size: 1.4rem;
+    color: #222222;  
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(0, 255, 132, 0.3);
+    background: rgba(0, 169, 81, 0.2);
+    border-color: #00ff84;
+}
+
+.nav-button:hover .nav-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 5px rgba(34, 34, 34, 0.3));
+}
+
+
+.my-workout {
+    background: rgba(27, 67, 50, 0.9);
+}
+
+.weight-tracking {
+    background: rgba(27, 67, 50, 0.9);
+}
+
+
+
 @media screen and (max-width: 768px) {
     .workouts-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .programs-navigation {
+        flex-direction: row;
+        padding: 0 0.5rem;
+        gap: 0.8rem;
+    }
+
+    .nav-button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        min-width: 150px;
+    }
+
+    .nav-button .nav-icon {
+        font-size: 1.2rem;
+    }
+
+    .programs-header-container h2 {
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
+    }
 }
 
-/* On small screens, use a single column for ease-of-use */
+
 @media screen and (max-width: 480px) {
     .workouts-grid {
         grid-template-columns: 1fr;
     }
     
+    .programs-navigation {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .nav-button {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+        min-width: unset;
+    }
+
+    .nav-button .nav-icon {
+        font-size: 1.1rem;
+    }
+
     .programs-header-container h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
     }
-    
+
+    .program-container {
+        padding: 1.2rem;
+    }
+
     .program-icon {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
-    
+
     .program-container h3 {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
+}
+
+.program-icon, .nav-icon {
+    transition: all 0.3s ease;
+}
+
+.program-container:hover .program-icon {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(34, 34, 34, 0.3));
+}
+
+.program-container:nth-of-type(1) .program-icon,
+.program-container:nth-of-type(2) .program-icon,
+.program-container:nth-of-type(3) .program-icon,
+.program-container:nth-of-type(4) .program-icon {
+    color: #222222;  
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.swal2-popup {
+  background: rgba(16, 16, 28, 0.95) !important;
+  color: #fff !important;
+  border: 1px solid #00ff84 !important;
+}
+
+.swal2-title {
+  color: #00ff84 !important;
+  font-size: 1.5em !important;
+}
+
+.swal2-confirm {
+  background: #00ff84 !important;
+  color: #10101c !important;
+  border: none !important;
+  box-shadow: 0 0 10px rgba(0, 255, 132, 0.5) !important;
+}
+
+.swal2-cancel {
+  background: #ff3860 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.swal2-confirm:hover {
+  background: #00cc6a !important;
+  transform: scale(1.05);
+}
+
+.swal2-cancel:hover {
+  background: #cc2d4d !important;
+  transform: scale(1.05);
 }

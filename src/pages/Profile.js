@@ -374,8 +374,8 @@ const Profile = () => {
                 text: `Are you sure you want to make your profile ${user.isPrivate ? 'public' : 'private'}?`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: user.isPrivate ? '< MAKE PUBLIC >' : '< MAKE PRIVATE >',
-                cancelButtonText: '< CANCEL >',
+                confirmButtonText: user.isPrivate ? '< MAKE PUBLIC >' : '< MAKE PRIVATE >',  // Remove < > symbols
+                cancelButtonText: '< CANCEL >',  // Simplified text
                 background: 'rgba(16, 16, 28, 0.95)',
                 confirmButtonColor: '#00ff84',
                 cancelButtonColor: '#ff4444',
@@ -422,7 +422,6 @@ const Profile = () => {
         return digits.length === 10 && /^\d+$/.test(digits);
     };
 
-    // Add this for privacy confirmation
     const handlePrivacyToggle = async () => {
         const result = await Swal.fire({
             title: 'Change Profile Privacy',
@@ -456,84 +455,85 @@ const Profile = () => {
         <div className="profile-container">
             <div className="profile-card">
                 <div className="profile-header">
-    <div className="profile-picture-container">
-        {previewUrl ? (
-            <img 
-                src={previewUrl} 
-                alt="Preview" 
-                style={{ 
-                    width: '250px', 
-                    height: '250px', 
-                    objectFit: 'cover',
-                    borderRadius: '50%'  
-                }}
-            />
-        ) : user.profilePicture ? (
-            <img 
-                src={user.profilePicture}  
-                alt="Profile" 
-                style={{ 
-                    width: '250px', 
-                    height: '250px', 
-                    objectFit: 'cover',
-                    borderRadius: '50%'  
-                }}
-            />
-        ) : (
-            <FaUser style={{ 
-                width: '80px', 
-                height: '80px', 
-                color: '#00ff84' 
-            }} />
-        )}
+                    <h2 className="profile-picture-title">My Profile </h2>
+                    <div className="profile-picture-container">
+                        {previewUrl ? (
+                            <img 
+                                src={previewUrl} 
+                                alt="Preview" 
+                                style={{ 
+                                    width: '250px', 
+                                    height: '250px', 
+                                    objectFit: 'cover',
+                                    borderRadius: '50%'  
+                                }}
+                            />
+                        ) : user.profilePicture ? (
+                            <img 
+                                src={user.profilePicture}  
+                                alt="Profile" 
+                                style={{ 
+                                    width: '250px', 
+                                    height: '250px', 
+                                    objectFit: 'cover',
+                                    borderRadius: '50%'  
+                                }}
+                            />
+                        ) : (
+                            <FaUser style={{ 
+                                width: '80px', 
+                                height: '80px', 
+                                color: '#00ff84' 
+                            }} />
+                        )}
 
-        <button 
-            className={`icon-button ${isEditingPhoto ? 'close-photo-button' : 'camera-button'}`}
-            onClick={() => isEditingPhoto ? cancelEdit() : setIsEditingPhoto(true)}
-            title={isEditingPhoto ? "Close editing" : "Edit profile picture"}
-        >
-            {isEditingPhoto ? <FaTimes /> : <FaCamera />}
-        </button>
-    </div>
+                        <button 
+                            className={`icon-button ${isEditingPhoto ? 'close-photo-button' : 'camera-button'}`}
+                            onClick={() => isEditingPhoto ? cancelEdit() : setIsEditingPhoto(true)}
+                            title={isEditingPhoto ? "Close editing" : "Edit profile picture"}
+                        >
+                            {isEditingPhoto ? <FaTimes /> : <FaCamera />}
+                        </button>
+                    </div>
 
-    {isEditingPhoto && ( 
-        <div className="edit-controls">
-            <div className="file-input-container">
-                <input 
-                    type="file" 
-                    id="profile-upload"
-                    onChange={handleFileChange}
-                    accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,image/tiff"
-                    className="file-input"
-                />
-                <label htmlFor="profile-upload" className="file-input-label">
-                    Choose Photo
-                </label>
-                {selectedFile && (
-                    <span className="selected-file">{selectedFile.name}</span>
-                )}
-            </div>
-            <div className="action-buttons">
-                {selectedFile && (
-                    <button 
-                        className="upload-button"
-                        onClick={handleUpload}
-                    >
-                        Upload
-                    </button>
-                )}
-                {user.profilePicture && (
-                    <button 
-                        className="delete-button"
-                        onClick={handleDelete}
-                    >
-                        <FaTrash /> Delete
-                    </button>
-                )}
-            </div>
-        </div>
-    )}
-</div>
+                    {isEditingPhoto && ( 
+                        <div className="edit-controls">
+                            <div className="file-input-container">
+                                <input 
+                                    type="file" 
+                                    id="profile-upload"
+                                    onChange={handleFileChange}
+                                    accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,image/tiff"
+                                    className="file-input"
+                                />
+                                <label htmlFor="profile-upload" className="file-input-label">
+                                    Choose Photo
+                                </label>
+                                {selectedFile && (
+                                    <span className="selected-file">{selectedFile.name}</span>
+                                )}
+                            </div>
+                            <div className="action-buttons">
+                                {selectedFile && (
+                                    <button 
+                                        className="upload-button"
+                                        onClick={handleUpload}
+                                    >
+                                        Upload
+                                    </button>
+                                )}
+                                {user.profilePicture && (
+                                    <button 
+                                        className="delete-button"
+                                        onClick={handleDelete}
+                                    >
+                                        <FaTrash /> Delete
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
 
                 {/* Move edit button here, right after profile-header */}
                 <div className="edit-button-container">

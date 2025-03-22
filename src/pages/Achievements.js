@@ -36,29 +36,28 @@ const Achievements = () => {
         fetchAchievements();
     }, [email]);
 
-    if (loading) {
-        return <div className="loading-container">Loading achievements...</div>;
-    }
-
     return (
-        <div className="achievements-container">
-            <div className="achievements-card">
-                <div className="achievements-header">
-                    <FaTrophy className="trophy-icon" />
-                    <h2>My Achievements</h2>
-                </div>
-
-              
-
-                    <div className="workouts-grid">
-                        {workouts.map((workout, index) => (
-                            <div key={index} className="workout-card">
-                                <p>{workout}</p>
-                            </div>
-                        ))}
+        <div className="achievements-page">
+            <div className="achievements-main-container">
+                <div className="achievements-section">
+                    <div className="achievements-header">
+                        <h2>My Achievements</h2>
                     </div>
+
+                    {loading ? (
+                        <div className="loading-message">Loading achievements...</div>
+                    ) : (
+                        <div className="achievements-grid">
+                            {workouts.map((workout, index) => (
+                                <div key={index} className="achievement-card">
+                                    <p>{workout}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
+        </div>
     );
 };
 
